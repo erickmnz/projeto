@@ -1,6 +1,6 @@
-package com.mnz.proj.model;
+package com.mnz.proj.domain.model;
 
-import com.mnz.proj.model.enums.Section;
+import com.mnz.proj.domain.model.enums.Section;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

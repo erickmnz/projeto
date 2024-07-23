@@ -1,4 +1,4 @@
-package com.mnz.proj.model.enums;
+package com.mnz.proj.domain.model.enums;
 
 public enum Section {
 	ELETRONICS,

@@ -1,4 +1,4 @@
-package com.mnz.proj.model;
+package com.mnz.proj.domain.model;
 
 import java.util.List;
 
