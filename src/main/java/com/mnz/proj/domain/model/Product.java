@@ -1,6 +1,9 @@
 package com.mnz.proj.domain.model;
 
+import java.util.Objects;
+
 import com.mnz.proj.domain.model.enums.Section;
+import com.mnz.proj.dto.ProductDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +37,13 @@ public class Product {
 		this.description = description;
 		this.section = section;
 		this.price = price;
+	}
+	public Product(ProductDTO dto) {
+		this.id = dto.getId();
+		this.name = dto.getName();
+		this.description = dto.getDescription();
+		this.section = dto.getSection();
+		this.price = dto.getPrice();
 	}
 
 	public Long getId() {
@@ -70,6 +80,23 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		return Objects.equals(id, other.id);
 	}
 	
 	

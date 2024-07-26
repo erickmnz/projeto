@@ -1,14 +1,14 @@
 package com.mnz.proj.service.imp;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mnz.proj.domain.model.Client;
-import com.mnz.proj.domain.model.Order;
-import com.mnz.proj.domain.model.Product;
 import com.mnz.proj.domain.repository.ClientRepository;
+import com.mnz.proj.dto.ClientDTO;
 import com.mnz.proj.service.ClientService;
 
 @Service
@@ -23,42 +23,39 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
-	public Client findById(Long id) {
+	public ClientDTO findById(Long id) {
 		// TODO Auto-generated method stub
-		return clientRepository.findById(id).orElseThrow(NoSuchElementException::new);
+		Client client = clientRepository.findById(id).orElseThrow(NoSuchElementException::new);
+		ClientDTO clientDTO = new ClientDTO(client);
+		return clientDTO;
 	}
 
 	@Override
-	public Client create(Client client) {
-		if(clientRepository.existsById(client.getId()) && client.getId()!=null) {
+	public ClientDTO create(Client clientToSave) {
+		if(clientRepository.existsById(clientToSave.getId()) && clientToSave.getId()!=null) {
 			throw new IllegalArgumentException("Client already exist");
 		}
-		return clientRepository.save(client);
+		Client client = clientRepository.save(clientToSave);
+		ClientDTO clientDTO = new ClientDTO(client);
+		return clientDTO;
 	}
 
 	@Override
-	public List<Client> findByName(String name) {
-		// TODO Auto-generated method stub
-		return clientRepository.findByName(name);
+	public Page<ClientDTO> findByName(String name, Pageable pageable) {
+		return clientRepository.findByName(name, pageable).map(c -> new ClientDTO(c));
 	}
 
 	@Override
-	public List<Client> findBySurname(String surname) {
-		// TODO Auto-generated method stub
-		return clientRepository.findBySurname(surname);
+	public Page<ClientDTO> findBySurname(String surname, Pageable pageable) {
+		return clientRepository.findByName(surname, pageable).map(c -> new ClientDTO(c));
 	}
 
 	@Override
-	public List<Client> findAll() {
-		// TODO Auto-generated method stub
-		return clientRepository.findAll();
+	public Page<ClientDTO> findAll(Pageable pageable) {
+		return clientRepository.findAll(pageable).map(c -> new ClientDTO(c));
 	}
 
-	@Override
-	public List<Product> listProducts(Client client) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 	

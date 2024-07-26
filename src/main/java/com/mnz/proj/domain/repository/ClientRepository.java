@@ -1,13 +1,12 @@
 package com.mnz.proj.domain.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mnz.proj.domain.model.Client;
-import com.mnz.proj.domain.model.Order;
 
 public interface ClientRepository extends JpaRepository<Client, Long>{
-	List<Client> findByName(String name);
-	List<Client> findBySurname(String surname);
+	Page<Client> findByName(String name, Pageable page);
+	Page<Client> findBySurname(String surname, Pageable page);
 }
