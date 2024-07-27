@@ -3,6 +3,8 @@ package com.mnz.proj.domain.model;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.mnz.proj.dto.PaymentDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +33,13 @@ public class Payment {
 		this.moment = moment;
 		this.order = order;
 	}
-
+	
+	public Payment(PaymentDTO payment) {
+		this.id = payment.getId();
+		this.moment = payment.getMoment();
+		this.order = new Order(payment.getOrder());
+	}
+	
 	public Long getId() {
 		return id;
 	}

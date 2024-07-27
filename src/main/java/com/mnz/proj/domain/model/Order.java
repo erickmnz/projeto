@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.mnz.proj.domain.model.enums.OrderStatus;
+import com.mnz.proj.dto.OrderDTO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -47,6 +48,16 @@ public class Order {
 		this.client=client;
 		this.payment=payment;
 	}
+	
+	public Order(OrderDTO order) {
+		this.id = order.getId();
+		this.orderMoment = order.getOrderMoment();
+		this.orderStatus = order.getOrderStatus();
+		this.orderItens = order.getOrderItens().stream().map(p->new Product(p)).toList();
+		this.client=new Client(order.getClient());
+		this.payment=new Payment(order.getPayment());
+	}
+	
 	public Instant getOrderMoment() {
 		return orderMoment;
 	}

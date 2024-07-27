@@ -9,4 +9,5 @@ import com.mnz.proj.domain.model.Client;
 public interface ClientRepository extends JpaRepository<Client, Long>{
 	Page<Client> findByName(String name, Pageable page);
 	Page<Client> findBySurname(String surname, Pageable page);
+	
 }

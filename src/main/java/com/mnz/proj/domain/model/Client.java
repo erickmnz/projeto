@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.mnz.proj.dto.ClientDTO;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,8 +31,18 @@ public class Client {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
 
-	public Client() {
-
+	public Client(ClientDTO client) {
+		this.id = client.getId();
+		this.telephoneNumber = client.getTelephoneNumber();
+		this.cep = client.getCep();
+		this.name = client.getName();
+		this.surname=client.getSurname();
+		this.address = client.getAddress();
+		this.email = client.getEmail();
+		this.birthday = client.getBirthday();
+		this.password = client.getPassword();
+		this.roles = client.getRoles();
+		this.orders = client.getOrders().stream().map(o->new Order(o)).toList();
 	}
 
 	public Client(Long id, Long telephoneNumber, Long cep, String name,String surname, String address, String email,
@@ -134,10 +146,6 @@ public class Client {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
 	}
 
 	@Override

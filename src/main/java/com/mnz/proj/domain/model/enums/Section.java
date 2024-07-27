@@ -1,7 +1,7 @@
 package com.mnz.proj.domain.model.enums;
 
 public enum Section {
-	ELETRONICS,
+	ELECTRONICS,
 	WEAR,
 	FOOD,
 	CLEANING_PRODUCTS

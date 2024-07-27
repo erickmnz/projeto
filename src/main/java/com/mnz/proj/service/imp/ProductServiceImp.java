@@ -4,22 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mnz.proj.domain.model.Product;
 import com.mnz.proj.domain.repository.ProductRepository;
 import com.mnz.proj.dto.ProductDTO;
 import com.mnz.proj.service.ProductService;
 
+
 @Service
 public class ProductServiceImp implements ProductService{
 	@Autowired
-	private ProductRepository pRepository;
+	private final ProductRepository pRepository;
 	
 	public ProductServiceImp(ProductRepository pRepository) {
-		super();
 		this.pRepository = pRepository;
 	}	
-	
+	@Transactional
 	@Override
 	public ProductDTO findById(Long id) {
 		
@@ -28,26 +29,39 @@ public class ProductServiceImp implements ProductService{
 	}
 
 
-
+	@Transactional
 	@Override
 	public ProductDTO create(ProductDTO productDto) {
-		Product product = new Product();
-		product.setName(productDto.getName());
-		product.setDescription(productDto.getDescription());
-		product.setSection(productDto.getSection());
-		product.setPrice(productDto.getPrice());
-		ProductDTO newProductDto = new ProductDTO(pRepository.save(product));
-		return newProductDto;
+			return new ProductDTO(pRepository.save(new Product(productDto)));
 	}
-
+	@Transactional
 	@Override
 	public Page<ProductDTO> findByName(String name, Pageable pageable) {
 		return  pRepository.findByName(name, pageable).map(c ->new ProductDTO(c));
 	}
-
+	@Transactional
 	@Override
 	public Page<ProductDTO> findAll(Pageable pageable) {
 		return pRepository.findAll(pageable).map(c ->new ProductDTO(c));
 	}
+	@Transactional
+	@Override
+	public ProductDTO update(Long id, ProductDTO productDto) {
+		Product product = pRepository.getReferenceById(id);
+		copyToProduct(productDto, product);
+		return new ProductDTO(pRepository.save(product));
+	}
+	
+	private void copyToProduct(ProductDTO productDto, Product product) {
+		product.setName(productDto.getName());
+		product.setDescription(productDto.getDescription());
+		product.setPrice(productDto.getPrice());
+		product.setSection(product.getSection());
+	}
 
+	@Transactional
+	@Override
+	public void deleteById(Long id) {
+		pRepository.deleteById(id);
+	}
 }

@@ -11,5 +11,6 @@ public interface ProductService {
 	Page<ProductDTO> findByName(String name, Pageable pageable);
 	Page<ProductDTO> findAll(Pageable pageable);
 	ProductDTO create(ProductDTO productDto);
-
+	ProductDTO update(Long id, ProductDTO productDto);
+	void deleteById(Long id);
 }
