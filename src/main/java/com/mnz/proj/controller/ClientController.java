@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mnz.proj.dto.ClientDTO;
+import com.mnz.proj.dto.OrderDTO;
 import com.mnz.proj.service.ClientService;
+import com.mnz.proj.service.OrderService;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -21,6 +23,8 @@ public class ClientController {
 
 	@Autowired
 	private ClientService service;
+	@Autowired
+	private OrderService order;
 
 	
 	@GetMapping(value="/{id}")
@@ -37,10 +41,10 @@ public class ClientController {
 	public ClientDTO create(@RequestBody ClientDTO clientDTO) {
 		return service.create(clientDTO);
 	}
-	@PutMapping(value="/{id")
+	@PutMapping(value="/{id}")
 	public ClientDTO update(@PathVariable("id") Long id, @RequestBody ClientDTO clientDto) {
 		return service.update(id, clientDto);
-	}
+	}	
 	@DeleteMapping(value="/{id}")
 	public void delete(@PathVariable("id") Long id) {
 		service.deleteById(id);

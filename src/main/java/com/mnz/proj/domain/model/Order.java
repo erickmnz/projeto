@@ -32,21 +32,18 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name="client_id")
 	private Client client;
-	@OneToOne(mappedBy="order", cascade=CascadeType.ALL)
-	private Payment payment;
 	
 	
 	public Order() {
 		
 	}
 	
-	public Order(Long id, Instant orderMoment, OrderStatus orderStatus, List<Product> orderItens, Client client, Payment payment) {
+	public Order(Long id, Instant orderMoment, OrderStatus orderStatus, List<Product> orderItens, Client client) {
 		this.id = id;
 		this.orderMoment = orderMoment;
 		this.orderStatus = orderStatus;
 		this.orderItens = orderItens;
 		this.client=client;
-		this.payment=payment;
 	}
 	
 	public Order(OrderDTO order) {
@@ -55,7 +52,6 @@ public class Order {
 		this.orderStatus = order.getOrderStatus();
 		this.orderItens = order.getOrderItens().stream().map(p->new Product(p)).toList();
 		this.client=new Client(order.getClient());
-		this.payment=new Payment(order.getPayment());
 	}
 	
 	public Instant getOrderMoment() {
@@ -89,17 +85,10 @@ public class Order {
 		this.client = client;
 	}
 
-	public void setOrderItens(List<Product> orderItens) {
-		this.orderItens = orderItens;
+	public void setOrderItens(Product orderItem) {
+		this.orderItens.add(orderItem);
 	}
 
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
 
 	public void setId(Long id) {
 		this.id = id;

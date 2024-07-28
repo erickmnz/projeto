@@ -30,7 +30,11 @@ public class Client {
 	private String[] roles;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
-
+	
+	public Client() {
+		
+	}
+	
 	public Client(ClientDTO client) {
 		this.id = client.getId();
 		this.telephoneNumber = client.getTelephoneNumber();

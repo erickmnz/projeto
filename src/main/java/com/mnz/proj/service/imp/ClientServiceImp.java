@@ -12,6 +12,7 @@ import com.mnz.proj.domain.model.Client;
 import com.mnz.proj.domain.model.Order;
 import com.mnz.proj.domain.repository.ClientRepository;
 import com.mnz.proj.dto.ClientDTO;
+import com.mnz.proj.dto.OrderDTO;
 import com.mnz.proj.service.ClientService;
 
 @Service
@@ -36,9 +37,6 @@ public class ClientServiceImp implements ClientService{
 	@Transactional
 	@Override
 	public ClientDTO create(ClientDTO clientToSave) {
-		if(clientRepository.existsById(clientToSave.getId()) && clientToSave.getId()!=null) {
-			throw new IllegalArgumentException("Client already exist");
-		}
 		return new ClientDTO(clientRepository.save(new Client(clientToSave)));
 	}
 	@Transactional
@@ -81,6 +79,8 @@ public class ClientServiceImp implements ClientService{
 		client.setRoles(clientDto.getRoles());
 		client.setTelephoneNumber(clientDto.getTelephoneNumber());
 	}
+
+	
 
 
 

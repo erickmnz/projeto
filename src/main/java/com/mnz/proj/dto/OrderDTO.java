@@ -16,20 +16,17 @@ public class OrderDTO {
 	private OrderStatus orderStatus;
 	private List<ProductDTO> orderItens = new ArrayList<>();
 	private ClientDTO client;
-	private PaymentDTO payment;
 	
 	public OrderDTO() {
 		
 	}
 
-	public OrderDTO(Long id, Instant orderMoment, OrderStatus orderStatus, List<ProductDTO> orderItens,
-			ClientDTO client, PaymentDTO payment) {
+	public OrderDTO(Long id, OrderStatus orderStatus, List<ProductDTO> orderItens,
+			ClientDTO client) {
 		this.id = id;
-		this.orderMoment = orderMoment;
+		this.orderMoment = Instant.now();
 		this.orderStatus = orderStatus;
 		this.orderItens = orderItens;
-		this.client = client;
-		this.payment = payment;
 	}
 	
 	public OrderDTO(Order  order) {
@@ -38,7 +35,6 @@ public class OrderDTO {
 		this.orderStatus = order.getOrderStatus();
 		this.orderItens =order.getOrderItens().stream().map(p->new ProductDTO(p)).toList() ;
 		this.client = new ClientDTO(order.getClient());
-		this.payment = new PaymentDTO(order.getPayment());
 	}
 
 	
@@ -62,9 +58,6 @@ public class OrderDTO {
 		return client;
 	}
 
-	public PaymentDTO getPayment() {
-		return payment;
-	}
 	
 	
 }
