@@ -1,9 +1,10 @@
 package com.mnz.proj.service.imp;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +38,8 @@ public class OrderServiceImp implements OrderService{
 
 	@Transactional
 	@Override
-	public List<OrderDTO> findAll() {
-		return repository.findAll().stream().map(o->new OrderDTO(o)).toList();
+	public Page<OrderDTO> findAll(Pageable pageable) {
+		return repository.findAll(pageable).map(o->new OrderDTO(o));
 	}
 	@Transactional
 	public OrderDTO update(Long id, OrderDTO orderDto) {
